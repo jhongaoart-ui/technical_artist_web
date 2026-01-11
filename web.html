@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Technical Artist Curriculum v8.2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-dark': '#0b0d12',
+                        'cyber-panel': '#151b23',
+                        'cyber-teal': '#285e61',
+                        'cyber-teal-light': '#4fd1c5',
+                        'cyber-rust': '#a04030',
+                        'cyber-yellow': '#fbbf24',
+                        'cyber-pink': '#d946ef',
+                        'cyber-green': '#10b981',
+                        'cyber-blue': '#3b82f6',
+                        'cyber-orange': '#f97316',
+                        'cyber-purple': '#8b5cf6',
+                    },
+                    fontFamily: {
+                        'head': ['Rajdhani', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(79, 209, 197, 0.3)',
+                        'rust': '0 0 15px rgba(160, 64, 48, 0.4)',
+                        'pink': '0 0 15px rgba(217, 70, 239, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b0d12;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(40, 94, 97, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(160, 64, 48, 0.1) 0%, transparent 20%);
+            color: #cbd5e1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b0d12; }
+        ::-webkit-scrollbar-thumb { background: #285e61; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4fd1c5; }
+
+        /* Tech Border Generico */
+        .tech-border {
+            position: relative;
+            background: #151b23;
+            border: 1px solid #2d3748;
+            transition: border-color 0.3s ease;
+        }
+        
+        /* Variantes de Borde por Color */
+        .border-green-glow:hover { border-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+        .border-pink-glow:hover { border-color: #d946ef; box-shadow: 0 0 10px rgba(217, 70, 239, 0.2); }
+        .border-yellow-glow:hover { border-color: #fbbf24; box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+        .border-blue-glow:hover { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+        .border-orange-glow:hover { border-color: #f97316; box-shadow: 0 0 10px rgba(249, 115, 22, 0.2); }
+        .border-purple-glow:hover { border-color: #8b5cf6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.2); }
+
+        .tech-corner::before {
+            content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px;
+            border-top: 2px solid currentColor; border-left: 2px solid currentColor;
+        }
+        .tech-corner::after {
+            content: ''; position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px;
+            border-bottom: 2px solid currentColor; border-right: 2px solid currentColor;
+        }
+
+        /* Checkbox */
+        .cyber-check:checked + div {
+            background-color: currentColor;
+            border-color: currentColor;
+            box-shadow: 0 0 10px currentColor;
+        }
+        .cyber-check:checked + div svg { color: #000; }
+
+        /* Boss Checkbox */
+        .boss-check:checked + div {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            box-shadow: 0 0 15px #ef4444;
+        }
+        .boss-check:checked + div svg { color: #fff; }
+
+        /* Links */
+        .cyber-link {
+            text-decoration: none;
+            border-bottom: 1px dashed currentColor;
+            opacity: 0.8;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .cyber-link:hover {
+            opacity: 1;
+            border-bottom: 1px solid currentColor;
+            text-shadow: 0 0 8px currentColor;
+        }
+
+        .module-content {
+            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .module-card:hover .module-content, .module-content.force-open {
+            max-height: 1200px; 
+            opacity: 1;
+        }
+        
+        .active-module-highlight {
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+            background-color: rgba(251, 191, 36, 0.05);
+        }
+
+        /* Schedule Grid Styling */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 30px repeat(5, 1fr);
+            gap: 1px;
+            background-color: #2d3748;
+            border: 1px solid #374151;
+            border-radius: 4px;
+            overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .sched-header {
+            background-color: #1a202c;
+            color: #9ca3af;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .sched-time {
+            background-color: #111827;
+            color: #6b7280;
+            font-size: 8px;
+            padding: 2px;
+            text-align: right;
+            border-right: 1px solid #374151;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding-right: 4px;
+        }
+        .sched-cell {
+            background-color: #0f172a;
+            height: 16px; /* Altura de cada celda horaria */
+            transition: background-color 0.3s;
+        }
+        .sched-block {
+            opacity: 0.8;
+            border-left: 2px solid rgba(255,255,255,0.2);
+        }
+        .sched-free {
+            background-color: #0f172a;
+        }
+        .sched-free:hover {
+            background-color: #1e293b;
+        }
+
+        /* Input Styling */
+        .cyber-input {
+            background-color: #0f172a;
+            border: 1px solid #374151;
+            color: #cbd5e1;
+            padding: 4px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .cyber-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+        }
+        .cyber-btn {
+            background: #1e3a8a;
+            border: 1px solid #3b82f6;
+            color: #93c5fd;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cyber-btn:hover {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .log-entry {
+            border-left: 2px solid #3b82f6;
+            background: rgba(0,0,0,0.3);
+            margin-bottom: 4px;
+            padding: 4px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen pb-20">
+
+    <!-- Navbar HUD -->
+    <nav class="fixed top-0 w-full z-50 bg-cyber-dark/90 backdrop-blur border-b border-cyber-teal/30 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 bg-cyber-green shadow-[0_0_10px_rgba(16,185,129,0.8)] animate-pulse"></div>
+                    <div>
+                        <h1 class="text-2xl font-head font-bold text-white tracking-wider uppercase">TechArtist<span class="text-cyber-green">_OS</span></h1>
+                        <div class="text-[10px] font-mono text-cyber-teal-light tracking-[0.2em] opacity-80">V8.2 // OPHELIA RIG UPDATE</div>
+                    </div>
+                </div>
+                
+                <!-- Progress HUD -->
+                <div class="hidden md:flex flex-col w-1/3 items-end">
+                    <div class="flex justify-between w-full text-xs font-mono text-cyber-teal-light mb-1">
+                        <span>SYNC STATUS</span>
+                        <span id="progress-text">0%</span>
+                    </div>
+                    <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
+                        <div id="total-progress" class="h-full bg-gradient-to-r from-cyber-teal via-cyber-pink to-cyber-yellow w-0 transition-all duration-500 shadow-[0_0_10px_rgba(79,209,197,0.5)]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 pt-24 pb-12">
+        
+        <!-- Dashboard Header Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            
+            <!-- Mission Briefing & Current Module -->
+            <div class="lg:col-span-1 relative p-1 group">
+                <div class="absolute inset-0 bg-cyber-green/5 skew-x-12 rounded-lg transition-opacity group-hover:opacity-100 opacity-50"></div>
+                <div class="relative bg-cyber-panel border-l-4 border-cyber-green p-6 rounded-r-lg shadow-lg h-full flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-2xl font-head font-bold text-white mb-2 flex items-center">
+                            <span class="text-cyber-green mr-3">⚠</span> MISION ACTUAL
+                        </h2>
+                        
+                        <!-- Dynamic Active Module Display -->
+                        <div class="bg-black/40 border border-cyber-green/30 p-4 rounded mb-4 mt-2 flex items-center gap-4">
+                            <div class="w-10 h-10 bg-cyber-green/20 rounded-full flex items-center justify-center border border-cyber-green">
+                                <svg class="w-5 h-5 text-cyber-green animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <div>
+                                <div class="text-[9px] text-cyber-green font-mono tracking-widest uppercase">MÓDULO ACTIVO</div>
+                                <div id="active-module-name" class="text-lg text-white font-bold font-head leading-tight">CALCULANDO...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-1 mt-2 font-mono text-[9px] uppercase tracking-wider">
+                        <span class="px-2 py-1 bg-black/40 border border-green-500/30 text-green-400 rounded">MAYA</span>
+                        <span class="px-2 py-1 bg-black/40 border border-pink-500/30 text-pink-400 rounded">SUBSTANCE</span>
+                        <span class="px-2 py-1 bg-black/40 border border-yellow-500/30 text-yellow-400 rounded">PYTHON</span>
+                        <span class="px-2 py-1 bg-black/40 border border-blue-500/30 text-blue-400 rounded">UNITY</span>
+                        <span class="px-2 py-1 bg-black/40 border border-orange-500/30 text-orange-400 rounded">HOUDINI</span>
+                        <span class="px-2 py-1 bg-black/40 border border-purple-500/30 text-purple-400 rounded">UNREAL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRONOGRAMA & CALENDAR BLOCK (UPDATED WITH LOG) -->
+            <div class="lg:col-span-2 relative p-1">
+                <div class="absolute inset-0 bg-cyber-blue/5 -skew-x-2 rounded-lg"></div>
+                <div class="relative bg-cyber-panel border-l-4 border-cyber-blue p-6 rounded-r-lg shadow-lg h-full transition-all duration-500" id="protocol-panel">
+                    
+                    <div class="flex justify-between items-start mb-4 border-b border-gray-700 pb-2">
+                        <div>
+                            <h3 class="text-xl font-head font-bold text-white flex items-center">
+                                <span class="text-cyber-blue mr-2">📅</span> CRONOGRAMA TÁCTICO
+                            </h3>
+                            <div class="text-xs text-gray-400 font-mono">Plan diario (08:00 - 22:00) | Bloque de Estudio: 18:00 - 22:00</div>
+                        </div>
+                        <div class="text-right">
+                            <span id="routine-badge" class="text-[10px] bg-cyber-blue text-black px-2 py-1 rounded font-bold font-mono">STANDARD</span>
+                            <div class="text-[9px] text-gray-500 mt-1">META: MARZO 2027</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Col 1: Schedule Grid -->
+                        <div>
+                            <div class="schedule-grid mb-2" id="full-schedule">
+                                <!-- Generated by JS -->
+                            </div>
+                            <div class="flex gap-4 justify-between bg-black/30 p-2 rounded text-[10px] font-mono border border-gray-800">
+                                <div class="flex items-center"><div class="w-2 h-2 rounded bg-gray-800 border border-gray-600 mr-2"></div><span class="text-gray-500">LIBRE</span></div>
+                                <div class="flex items-center"><div id="legend-color-box" class="w-2 h-2 rounded bg-cyber-blue mr-2 animate-pulse"></div><span id="legend-text" class="text-white font-bold">ESTUDIO (4H)</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Col 2: Battle Log (NEW) -->
+                        <div class="border-l border-gray-700 pl-4 flex flex-col h-full">
+                            <h4 class="text-xs font-head font-bold text-cyber-blue mb-2 uppercase tracking-wider">Registro de Combate (Diario)</h4>
+                            
+                            <!-- Form -->
+                            <div class="space-y-2 mb-4">
+                                <div class="flex gap-2">
+                                    <input type="number" id="log-hours" placeholder="Hrs" class="cyber-input w-20" step="0.5" min="0">
+                                    <input type="text" id="log-note" placeholder="Nota de misión..." class="cyber-input flex-grow">
+                                </div>
+                                <button id="btn-save-log" class="cyber-btn w-full text-xs">Registrar Avance</button>
+                            </div>
+
+                            <!-- List -->
+                            <div class="flex-grow bg-black/20 rounded border border-gray-800 overflow-hidden flex flex-col">
+                                <div class="bg-gray-900 px-2 py-1 text-[9px] text-gray-500 font-mono border-b border-gray-800 flex justify-between">
+                                    <span>HISTORIAL RECIENTE</span>
+                                    <span id="total-hours-display" class="text-cyber-blue font-bold">TOTAL: 0H</span>
+                                </div>
+                                <div id="log-list" class="overflow-y-auto p-2 h-32 custom-scrollbar space-y-1">
+                                    <!-- Logs go here -->
+                                    <div class="text-center text-gray-600 text-[10px] mt-4">Sin registros.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Grid Layout (Curriculum) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="curriculum-grid">
+
+            <!-- UNIT 1: RIGGING -->
+            <div class="col-span-1 tech-border border-green-glow rounded-lg group module-card text-cyber-green tech-corner" id="card-u1">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-green-900/40 text-green-400 border border-green-500/30 px-2 py-0.5 text-xs font-mono rounded">LVL 1</span>
+                        <span class="text-xs font-mono text-gray-500">ENE - ABR</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Rigging Master</h3>
+                    
+                    <div class="module-content space-y-4 force-open">
+                        
+                        <!-- M1.0: FIX LEGACY RIG (UPDATED) -->
+                        <div class="bg-black/30 p-3 rounded border border-green-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]" id="m1.0">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-white font-bold text-sm flex items-center">
+                                    <span class="text-green-400 mr-2">★</span> M1.0: Fix Legacy Rig
+                                </h4>
+                                <span class="text-[10px] text-green-300 font-mono bg-green-900/50 px-1 rounded">25h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-400 mb-2 font-mono">
+                                Objetivo: Limpiar y profesionalizar el rig de Ophelia.
+                            </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Limpiar Controladores (Lock/Hide)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t2"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Pose Editor: Botas (Arrugas)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t3"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Pose Editor: Hombros (Volumen)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t4"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Pulir Pesos (Skinning)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t5"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Rig Pelo (Dynamic/Joints)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t6"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Rig Ropa (Accesorios)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t7"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Pulir Rig Arma (Hard Surface)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m0-t8"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Rig Lengua y Boca</span></label></li>
+                            </ul>
+                        </div>
+
+                        <!-- M1.1 -->
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m1.1">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-green-400 font-bold text-sm">M1.1: Humanoid</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">100h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono flex flex-col gap-1">
+                                <a href="https://www.youtube.com/playlist?list=PLgala72Uap1rtI7sy75fDHqV7VKQBMknt" target="_blank" class="cyber-link hover:text-white">▶ Fundamentals (AntCGI)</a>
+                                <a href="https://www.youtube.com/playlist?list=PLgala72Uap1rYD3m7Z6BpzNpdIQzgVtsM" target="_blank" class="cyber-link hover:text-white">▶ Data Centric Rigging</a>
+                            </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Orientación y Jerarquía</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m1-t2"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Rig Bípedo Completo</span></label></li>
+                            </ul>
+                        </div>
+                        <!-- M1.2 -->
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m1.2">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-green-400 font-bold text-sm">M1.2: Mechanical</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">80h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono flex flex-col gap-1">
+                                <a href="https://www.youtube.com/playlist?list=PL8KHQwh1BheXeB_k_b4TBYQBisAx9EfTk" target="_blank" class="cyber-link hover:text-white">▶ Tank Rigging</a>
+                                <a href="https://www.youtube.com/playlist?list=PLDXGa6BGbkDicDfh2ptH4xWzVeuELbxbz" target="_blank" class="cyber-link hover:text-white">▶ Hydraulic Pistons</a>
+                            </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m2-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Orugas, Engranajes y Pistones</span></label></li>
+                            </ul>
+                        </div>
+                        <!-- M1.3 -->
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m1.3">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-green-400 font-bold text-sm">M1.3: Cuadrúpedos</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">80h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                <a href="https://www.youtube.com/playlist?list=PLgala72Uap1oClPtT7oCtrdwxA5xsHsFV" target="_blank" class="cyber-link hover:text-white">▶ Creature Rigging (AntCGI)</a>
+                            </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m3-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Dog Leg Setup & Spine</span></label></li>
+                            </ul>
+                        </div>
+                        <!-- M1.4 -->
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m1.4">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-green-400 font-bold text-sm">M1.4: Intro Python Rig</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">40h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                <a href="https://www.youtube.com/playlist?list=PLgala72Uap1rtRRi-MAI0RMc7w1fpD2Io" target="_blank" class="cyber-link hover:text-white">▶ Python for Maya (AntCGI)</a>
+                            </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1-m4-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Scripting Básico para Riggers</span></label></li>
+                            </ul>
+                        </div>
+
+                        <!-- UNIT 1 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss1">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u1-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: RIGGER DEMO REEL</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: 1 Bípedo, 1 Mecánico (Pistones), 1 Cuadrúpedo. Clean Logs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 1.5: SUBSTANCE DESIGNER -->
+            <div class="col-span-1 tech-border border-pink-glow rounded-lg group module-card text-cyber-pink tech-corner" id="card-u1.5">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden bg-pink-900/10">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                         <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-pink-900/40 text-pink-400 border border-pink-500/30 px-2 py-0.5 text-xs font-mono rounded animate-pulse">LVL 1.5</span>
+                        <span class="text-xs font-mono text-gray-500">MAY (4 SEM)</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-pink-400 transition-colors">Material Alchemy</h3>
+                    <p class="text-xs text-gray-400 mb-4">Substance Designer. Lógica procedural en 2D.</p>
+                    
+                    <div class="module-content space-y-4">
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m1.5">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-pink-400 font-bold text-sm">M1.5: Procedural Maps</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">80h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://www.youtube.com/c/DanielThiger" target="_blank" class="cyber-link">Daniel Thiger</a>, <a href="https://substance3d.adobe.com/tutorials/" target="_blank" class="cyber-link">Adobe Learn</a>
+                             </div>
+                             <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1.5-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Node Logic (Blend, Shape, Warp)</span></label></li>
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u1.5-m1-t2"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Tile Generators & Patterns</span></label></li>
+                            </ul>
+                        </div>
+
+                         <!-- UNIT 1.5 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss1.5">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u1.5-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: SMART MATERIAL</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: Material complejo (Metal Oxidado/Sci-Fi) totalmente procedural.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 2: PYTHON LOGIC -->
+            <div class="col-span-1 tech-border border-yellow-glow rounded-lg group module-card text-cyber-yellow tech-corner" id="card-u2">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                         <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-yellow-900/40 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 text-xs font-mono rounded">LVL 2</span>
+                        <span class="text-xs font-mono text-gray-500">JUN - JUL</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">Python Logic</h3>
+                    <p class="text-xs text-gray-400 mb-4">Automatización de tareas y creación de herramientas.</p>
+                    
+                    <div class="module-content space-y-4">
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m2.1">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-yellow-400 font-bold text-sm">M2.1: Syntax</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">40h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://www.youtube.com/watch?v=_uQrJ0TkZlc" target="_blank" class="cyber-link">Mosh Python</a>, <a href="https://www.codecademy.com/learn/learn-python-3" target="_blank" class="cyber-link">Codecademy</a>
+                             </div>
+                             <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u2-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Loops, Lists, Dictionaries</span></label></li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m2.2">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-yellow-400 font-bold text-sm">M2.2: Maya API</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">120h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://zurbrigg.com/tutorials/python-for-maya-vol-1" target="_blank" class="cyber-link">Zurbrigg Vol 1</a>
+                             </div>
+                             <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u2-m2-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Tools & UI Creation</span></label></li>
+                            </ul>
+                        </div>
+
+                         <!-- UNIT 2 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss2">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u2-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: AUTO-RIGGER TOOL</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: Tool en GitHub. Seleccionar 3 objetos -> Crear Bones/Controls.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 3: UNITY -->
+            <div class="col-span-1 tech-border border-blue-glow rounded-lg group module-card text-cyber-blue tech-corner" id="card-u3">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                         <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.6zM6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-blue-900/40 text-blue-400 border border-blue-500/30 px-2 py-0.5 text-xs font-mono rounded">LVL 3</span>
+                        <span class="text-xs font-mono text-gray-500">AGO - SEP</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Unity Tech</h3>
+                    <p class="text-xs text-gray-400 mb-4">Puente entre código y arte visual.</p>
+                    
+                    <div class="module-content space-y-4">
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m3.1">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-blue-400 font-bold text-sm">M3.1: Basics</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">80h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://catlikecoding.com/unity/tutorials/basics/" target="_blank" class="cyber-link">Catlike Basics</a>, <a href="https://www.youtube.com/@Brackeys" target="_blank" class="cyber-link">Brackeys</a>
+                            </div>
+                             <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u3-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">C# Scripts & Inputs</span></label></li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/30 p-3 rounded border border-gray-800" id="m3.2">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-blue-400 font-bold text-sm">M3.2: Shaders</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">80h</span>
+                            </div>
+                            <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://catlikecoding.com/unity/tutorials/rendering/" target="_blank" class="cyber-link">Catlike Rendering</a>, <a href="https://www.youtube.com/@Acegikmo" target="_blank" class="cyber-link">Freya Holmér</a>
+                            </div>
+                             <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u3-m2-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Shader Graph (Holograma)</span></label></li>
+                            </ul>
+                        </div>
+
+                        <!-- UNIT 3 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss3">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u3-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: INTERACTIVE SCENE</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: Escena a 60 FPS, Shader interactivo (C#), Rig importado.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNIT 4: HOUDINI -->
+            <div class="col-span-1 tech-border border-orange-glow rounded-lg group module-card text-cyber-orange tech-corner" id="card-u4">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                         <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-orange-900/40 text-orange-400 border border-orange-500/30 px-2 py-0.5 text-xs font-mono rounded">LVL 4</span>
+                        <span class="text-xs font-mono text-gray-500">OCT - DIC</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">Houdini Sorcery</h3>
+                    <p class="text-xs text-gray-400 mb-4">El nivel experto. Contenido procedural.</p>
+                    
+                     <div class="module-content space-y-4">
+                         <div class="bg-black/30 p-3 rounded border border-gray-800" id="m4.1">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-orange-400 font-bold text-sm">M4.1: SOPs</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">100h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://www.youtube.com/playlist?list=PLhyeWJ40aDkUDHDOhYdwdfxo3tRAcd62X" target="_blank" class="cyber-link">Houdini isn't Scary</a>
+                             </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u4-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Nodes/Attributes (@P)</span></label></li>
+                            </ul>
+                        </div>
+                         <div class="bg-black/30 p-3 rounded border border-gray-800" id="m4.2">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-orange-400 font-bold text-sm">M4.2: VEX</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">140h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://www.tokeru.com/cgwiki/index.php?title=JoyOfVex" target="_blank" class="cyber-link">Joy of VEX</a>
+                             </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u4-m2-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">VEX & HDAs</span></label></li>
+                            </ul>
+                        </div>
+
+                         <!-- UNIT 4 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss4">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u4-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: PROCEDURAL ASSET</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: HDA funcional en motor. Slider de longitud que adapta geometría.
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- UNIT 5: UNREAL -->
+            <div class="col-span-1 tech-border border-purple-glow rounded-lg group module-card text-cyber-purple tech-corner" id="card-u5">
+                <div class="p-5 h-full flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                         <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4 z-10">
+                        <span class="bg-purple-900/40 text-purple-400 border border-purple-500/30 px-2 py-0.5 text-xs font-mono rounded">LVL 5</span>
+                        <span class="text-xs font-mono text-gray-500">ENE - MAR (2027)</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-head font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Unreal Final</h3>
+                    <p class="text-xs text-gray-400 mb-4">El estándar AAA. Integración final.</p>
+                    
+                     <div class="module-content space-y-4">
+                         <div class="bg-black/30 p-3 rounded border border-gray-800" id="m5.1">
+                             <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-purple-400 font-bold text-sm">M5.1: BP & Opt</h4>
+                                <span class="text-[10px] text-gray-500 font-mono">200h</span>
+                             </div>
+                             <div class="text-[10px] text-gray-500 mb-2 font-mono">
+                                Recursos: <a href="https://dev.epicgames.com/community/learning/paths" target="_blank" class="cyber-link">Epic Dev</a>, <a href="https://www.youtube.com/results?search_query=unreal+fest+optimization" target="_blank" class="cyber-link">Unreal Fest</a>
+                             </div>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><label class="flex items-center cursor-pointer w-full hover:bg-white/5 p-1 rounded transition"><input type="checkbox" class="cyber-check hidden" data-id="u5-m1-t1"><div class="w-3 h-3 border border-gray-600 bg-gray-900 mr-2 flex items-center justify-center transition-all"><svg class="w-2 h-2 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg></div><span class="text-gray-400 text-xs">Blueprints & Profiling</span></label></li>
+                            </ul>
+                        </div>
+
+                         <!-- UNIT 5 BOSS -->
+                        <div class="mt-2 pt-2 border-t border-gray-800" id="boss5">
+                             <label class="flex items-center cursor-pointer bg-red-900/10 hover:bg-red-900/30 p-2 rounded border border-red-800/30 transition-colors">
+                                <input type="checkbox" class="boss-check hidden" data-id="u5-boss">
+                                <div class="w-5 h-5 border border-red-500/50 rounded flex items-center justify-center mr-3 bg-black">
+                                     <svg class="w-3 h-3 text-transparent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-red-400 font-bold text-[10px] uppercase tracking-wider">BOSS: FINAL INTEGRATION</span>
+                            </label>
+                            <div class="text-[9px] text-gray-500 mt-1 pl-9">
+                                Requisitos: Todos los assets de unidades anteriores funcionando en una escena optimizada en UE5.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOSS FIGHT FINAL (Full) -->
+         <div class="mt-8 relative group">
+             <div class="absolute inset-0 bg-gradient-to-r from-red-900 via-transparent to-red-900 opacity-20 group-hover:opacity-30 transition-opacity rounded-lg"></div>
+             <div class="relative bg-black/50 border-2 border-red-900 p-8 rounded-lg shadow-rust text-center">
+                 <h2 class="text-4xl font-head font-bold text-white mb-2 tracking-[0.2em] text-shadow-red">FINAL BOSS</h2>
+                 <p class="text-red-400 font-mono text-xs mb-6">DEMO REEL ASSEMBLY // TARGET: EMPLOYMENT</p>
+                 
+                 <div class="flex flex-wrap justify-center gap-4 mb-6">
+                     <span class="bg-black/80 text-gray-400 border border-gray-700 px-4 py-2 rounded text-xs">CLIP 01: RIG</span>
+                     <span class="bg-black/80 text-pink-400 border border-pink-500/50 px-4 py-2 rounded text-xs shadow-[0_0_10px_rgba(236,72,153,0.3)]">CLIP 01.5: MATS</span>
+                     <span class="bg-black/80 text-gray-400 border border-gray-700 px-4 py-2 rounded text-xs">CLIP 02: TOOLS</span>
+                     <span class="bg-black/80 text-gray-400 border border-gray-700 px-4 py-2 rounded text-xs">CLIP 03: SHADER</span>
+                     <span class="bg-black/80 text-gray-400 border border-gray-700 px-4 py-2 rounded text-xs">CLIP 04: HOUDINI</span>
+                 </div>
+
+                 <label class="inline-flex items-center cursor-pointer bg-red-800 hover:bg-red-700 px-8 py-4 rounded font-bold text-white transition-all transform hover:scale-105 shadow-lg border border-red-500">
+                     <input type="checkbox" class="boss-check hidden" data-id="final-boss">
+                     <span class="mr-3 text-xl">🏆</span>
+                     <span>COMPLETAR CARRERA</span>
+                 </label>
+             </div>
+         </div>
+    </main>
+
+    <footer class="text-center py-8 text-gray-600 text-[10px] font-mono border-t border-gray-900 mt-12 bg-cyber-dark">
+        <p>SYSTEM V8.2 // FULL MODULES & LOGS RESTORED</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalTasks = checkboxes.length;
+            const progressBar = document.getElementById('total-progress');
+            const progressText = document.getElementById('progress-text');
+            const activeModuleText = document.getElementById('active-module-name');
+            
+            // DOM Elements for Dynamic Routine
+            const routineBadge = document.getElementById('routine-badge');
+            const protocolPanel = document.getElementById('protocol-panel');
+            const scheduleGrid = document.getElementById('full-schedule');
+            const legendColorBox = document.getElementById('legend-color-box');
+            const legendText = document.getElementById('legend-text');
+
+            // --- LOGGING SYSTEM ---
+            const btnSaveLog = document.getElementById('btn-save-log');
+            const inputHours = document.getElementById('log-hours');
+            const inputNote = document.getElementById('log-note');
+            const logList = document.getElementById('log-list');
+            const totalHoursDisplay = document.getElementById('total-hours-display');
+
+            // Load logs
+            let battleLogs = JSON.parse(localStorage.getItem('battleLogs')) || [];
+            renderLogs();
+
+            btnSaveLog.addEventListener('click', () => {
+                const h = parseFloat(inputHours.value);
+                const n = inputNote.value.trim();
+                
+                if (isNaN(h) || h <= 0) return alert("Ingresa horas válidas.");
+                
+                const newLog = {
+                    date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' }),
+                    hours: h,
+                    note: n || "Sin notas."
+                };
+                
+                battleLogs.unshift(newLog); // Add to top
+                localStorage.setItem('battleLogs', JSON.stringify(battleLogs));
+                renderLogs();
+                
+                inputHours.value = '';
+                inputNote.value = '';
+            });
+
+            function renderLogs() {
+                logList.innerHTML = '';
+                let total = 0;
+                
+                battleLogs.forEach((log, index) => {
+                    total += log.hours;
+                    const div = document.createElement('div');
+                    div.className = 'log-entry';
+                    div.innerHTML = `
+                        <div>
+                            <span class="text-cyber-blue font-bold mr-2">${log.date}</span>
+                            <span class="text-white">${log.hours}H</span>
+                            <span class="text-gray-500 ml-2 truncate max-w-[100px] inline-block align-bottom">${log.note}</span>
+                        </div>
+                        <button class="text-red-500 hover:text-red-300 font-bold" onclick="deleteLog(${index})">×</button>
+                    `;
+                    logList.appendChild(div);
+                });
+
+                if(battleLogs.length === 0) {
+                    logList.innerHTML = '<div class="text-center text-gray-600 text-[10px] mt-4">Sin registros.</div>';
+                }
+                
+                totalHoursDisplay.innerText = `TOTAL: ${total}H`;
+            }
+
+            // Expose delete function globally
+            window.deleteLog = (index) => {
+                if(confirm('¿Borrar registro?')) {
+                    battleLogs.splice(index, 1);
+                    localStorage.setItem('battleLogs', JSON.stringify(battleLogs));
+                    renderLogs();
+                }
+            };
+
+
+            // --- GENERATE SCHEDULE GRID ROWS ---
+            const startHour = 8; // 08:00
+            const endHour = 22;  // 22:00
+            
+            let gridHTML = `
+                <div class="sched-header bg-black border-r border-gray-700">HR</div>
+                <div class="sched-header">LUN</div>
+                <div class="sched-header">MAR</div>
+                <div class="sched-header">MIE</div>
+                <div class="sched-header">JUE</div>
+                <div class="sched-header">VIE</div>
+            `;
+
+            for (let h = startHour; h <= endHour; h++) {
+                // Time Label
+                const timeStr = h < 10 ? `0${h}:00` : `${h}:00`;
+                gridHTML += `<div class="sched-time font-mono">${timeStr}</div>`;
+                
+                // Days Cells
+                for (let d = 0; d < 5; d++) {
+                    // Check if this hour falls into the "Study Block" (18-22)
+                    let blockClass = "sched-free";
+                    // Study block is 18:00 to 21:59 (so hours 18, 19, 20, 21)
+                    if (h >= 18 && h < 22) {
+                        blockClass = "sched-block"; 
+                    }
+                    gridHTML += `<div class="sched-cell ${blockClass}" id="cell-${d}-${h}"></div>`;
+                }
+            }
+            scheduleGrid.innerHTML = gridHTML;
+
+
+            // Routine Profiles
+            const routines = {
+                theory: { 
+                    name: 'LEARNING MODE', 
+                    colorHex: '#fbbf24', 
+                    colorClass: 'text-yellow-400',
+                    borderColor: 'border-yellow-500',
+                    bg: 'bg-yellow-500'
+                },
+                standard: { 
+                    name: 'STANDARD MODE', 
+                    colorHex: '#3b82f6', 
+                    colorClass: 'text-cyber-blue',
+                    borderColor: 'border-cyber-blue',
+                    bg: 'bg-cyber-blue'
+                },
+                practice: { 
+                    name: 'PRODUCTION MODE', 
+                    colorHex: '#f87171', 
+                    colorClass: 'text-red-400',
+                    borderColor: 'border-red-500',
+                    bg: 'bg-red-500'
+                }
+            };
+
+            // Module Definition (Full List)
+            const modules = [
+                { id: 'm1.0', name: 'M1.0: Fix Legacy Rig', checks: ['u1-m0-t1', 'u1-m0-t2', 'u1-m0-t3', 'u1-m0-t4', 'u1-m0-t5', 'u1-m0-t6', 'u1-m0-t7', 'u1-m0-t8'], type: 'practice' },
+                { id: 'm1.1', name: 'M1.1: Mecánicas/Bípedo', checks: ['u1-m1-t1', 'u1-m1-t2'], type: 'theory' },
+                { id: 'm1.2', name: 'M1.2: Mechanical Rig', checks: ['u1-m2-t1'], type: 'standard' },
+                { id: 'm1.3', name: 'M1.3: Creatures', checks: ['u1-m3-t1'], type: 'standard' },
+                { id: 'm1.4', name: 'M1.4: Intro Python Rig', checks: ['u1-m4-t1'], type: 'theory' },
+                { id: 'boss1', name: 'BOSS: RIGGER REEL', checks: ['u1-boss'], type: 'practice' },
+                
+                { id: 'm1.5', name: 'M1.5: Procedural Maps', checks: ['u1.5-m1-t1', 'u1.5-m1-t2'], type: 'standard' },
+                { id: 'boss1.5', name: 'BOSS: SMART MATERIAL', checks: ['u1.5-boss'], type: 'practice' },
+
+                { id: 'm2.1', name: 'M2.1: Python Syntax', checks: ['u2-m1-t1'], type: 'theory' },
+                { id: 'm2.2', name: 'M2.2: Maya API', checks: ['u2-m2-t1'], type: 'standard' },
+                { id: 'boss2', name: 'BOSS: AUTO-RIGGER', checks: ['u2-boss'], type: 'practice' },
+
+                { id: 'm3.1', name: 'M3.1: Unity Basics', checks: ['u3-m1-t1'], type: 'standard' },
+                { id: 'm3.2', name: 'M3.2: Unity Shaders', checks: ['u3-m2-t1'], type: 'standard' },
+                { id: 'boss3', name: 'BOSS: UNITY SCENE', checks: ['u3-boss'], type: 'practice' },
+
+                { id: 'm4.1', name: 'M4.1: Houdini SOPs', checks: ['u4-m1-t1'], type: 'theory' },
+                { id: 'm4.2', name: 'M4.2: Houdini VEX', checks: ['u4-m2-t1'], type: 'theory' },
+                { id: 'boss4', name: 'BOSS: HOUDINI ASSET', checks: ['u4-boss'], type: 'practice' },
+
+                { id: 'm5.1', name: 'M5.1: Unreal BP', checks: ['u5-m1-t1'], type: 'standard' },
+                { id: 'boss5', name: 'BOSS: UNREAL FINAL', checks: ['u5-boss'], type: 'practice' },
+                { id: 'final', name: 'FINAL BOSS: CAREER', checks: ['final-boss'], type: 'practice' }
+            ];
+
+            function checkCurrentModule() {
+                // Remove highlight from all
+                modules.forEach(m => {
+                    const el = document.getElementById(m.id);
+                    if(el) el.classList.remove('active-module-highlight');
+                });
+
+                let foundActive = false;
+
+                for (let i = 0; i < modules.length; i++) {
+                    const mod = modules[i];
+                    let isComplete = true;
+                    
+                    // Check if all tasks in this module are checked
+                    for (let checkId of mod.checks) {
+                        const box = document.querySelector(`input[data-id="${checkId}"]`);
+                        if (box && !box.checked) {
+                            isComplete = false;
+                            break;
+                        }
+                    }
+
+                    if (!isComplete) {
+                        activeModuleText.innerText = mod.name;
+                        activeModuleText.className = 'text-xl font-bold font-head'; 
+                        
+                        const routine = routines[mod.type];
+                        updateRoutineUI(routine);
+                        
+                        const el = document.getElementById(mod.id);
+                        if(el) {
+                            el.classList.add('active-module-highlight');
+                            const parentContent = el.closest('.module-content');
+                            if(parentContent) {
+                                parentContent.style.maxHeight = '1200px';
+                                parentContent.style.opacity = '1';
+                            }
+                        }
+                        
+                        foundActive = true;
+                        break;
+                    }
+                }
+
+                if (!foundActive) {
+                    activeModuleText.innerText = "ALL SYSTEMS GO // READY";
+                    activeModuleText.classList.add('text-green-400');
+                    updateRoutineUI(routines.practice);
+                }
+            }
+
+            function updateRoutineUI(routine) {
+                // Update Badge
+                routineBadge.innerText = routine.name;
+                routineBadge.className = `text-[9px] text-black px-2 py-1 rounded font-bold font-mono ${routine.bg}`;
+                
+                // Update Panel Border
+                protocolPanel.className = `relative bg-cyber-panel border-l-4 p-6 rounded-r-lg shadow-lg h-full transition-all duration-500 ${routine.borderColor}`;
+
+                // Update Legend
+                legendColorBox.className = `w-3 h-3 rounded mr-2 animate-pulse ${routine.bg}`;
+                legendText.innerText = `BLOQUE 4H (${routine.name})`;
+                legendText.className = `font-bold ${routine.colorClass}`;
+
+                // Update Grid Cells Colors (The 4-hour block)
+                const cells = document.querySelectorAll('.sched-block');
+                cells.forEach(cell => {
+                    cell.style.backgroundColor = routine.colorHex;
+                    cell.style.boxShadow = `0 0 10px ${routine.colorHex}40`;
+                });
+            }
+
+            // Init & Events
+            checkboxes.forEach(box => {
+                const saved = localStorage.getItem(box.dataset.id);
+                if (saved === 'true') {
+                    box.checked = true;
+                    box.parentElement.classList.add('bg-white/5');
+                }
+                
+                box.addEventListener('change', () => {
+                    localStorage.setItem(box.dataset.id, box.checked);
+                    updateProgress();
+                    checkCurrentModule();
+                    
+                    if(box.checked) {
+                        box.parentElement.classList.add('bg-white/5');
+                    } else {
+                        box.parentElement.classList.remove('bg-white/5');
+                    }
+                });
+            });
+
+            function updateProgress() {
+                const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                const percentage = Math.round((checked / totalTasks) * 100);
+                
+                progressBar.style.width = percentage + '%';
+                progressText.innerText = percentage + '%';
+            }
+
+            updateProgress();
+            checkCurrentModule();
+        });
+    </script>
+</body>
+</html>
